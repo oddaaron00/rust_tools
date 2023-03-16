@@ -217,9 +217,9 @@ pub fn get_project_root(current_dir: &str) -> Result<String> {
         return Err("not in the correct repository".into());
     }
 
-    let dev_project_root = std::env::var("DEV_PROJECT_ROOT")?;
+    let repository_path = std::env::var("REPOSITORY_PATH")?;
     let project_root = if cfg!(debug_assertions) {
-        &dev_project_root
+        &repository_path
     } else {
         stdout
     };
@@ -413,7 +413,7 @@ pub mod rules {
 
         fn get_path() -> String {
             dotenv().ok();
-            std::env::var("DEV_PROJECT_ROOT").unwrap()
+            std::env::var("REPOSITORY_PATH").unwrap()
         }
 
         #[bench]
