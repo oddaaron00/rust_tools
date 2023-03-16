@@ -63,7 +63,7 @@ impl Config {
 
         let feature = match args.next() {
             Some(arg) => arg,
-            None => return Err("Didn't get a feature to test".into()),
+            None => return Err("didn't get a feature to test".into()),
         };
 
         let current_dir = match args.next() {
@@ -177,7 +177,7 @@ impl Subdir {
         let path = if path.exists() {
             path.into()
         } else {
-            return Err(format!("Could not locate {subdir_path_string}").into());
+            return Err(format!("could not locate {subdir_path_string}").into());
         };
 
         Ok(Self { path, subdir_type })
@@ -200,7 +200,7 @@ pub fn get_project_root(current_dir: &str) -> Result<String> {
         .output()
     {
         Ok(output) => output,
-        Err(_) => return Err("Could not run command 'git rev-parse --show-toplevel'".into()),
+        Err(_) => return Err("could not run command 'git rev-parse --show-toplevel'".into()),
     };
 
     let stderr = str::from_utf8(&command_output.stderr)?;
@@ -212,9 +212,9 @@ pub fn get_project_root(current_dir: &str) -> Result<String> {
     if stdout.is_empty() {
         return Err("'git rev-parse --show-toplevel' output is empty".into());
     }
-    let repo_name = std::env::var("REPOSITORY_NAME")?;
+    let repo_name = std::env::var("REPOSITORY_NAME").unwrap_or(stdout.to_owned());
     if !cfg!(debug_assertions) && !stdout.ends_with(&repo_name) {
-        return Err("Not in the correct repository".into());
+        return Err("not in the correct repository".into());
     }
 
     let dev_project_root = std::env::var("DEV_PROJECT_ROOT")?;
@@ -378,6 +378,13 @@ pub mod rules {
             "Use platform Locator methods",
             |file: &File| {
                 let buffered_reader = BufReader::new(file);
+                let mut matches = [
+                    "Platform",
+                    "Children",
+                    "ClassName",
+                    "ByText",
+                    "TidIsPresent",
+                ];
                 buffered_reader
                     .lines()
                     .map(|line| {
@@ -387,7 +394,7 @@ pub mod rules {
                     .skip_while(|line| !line.starts_with("public class"))
                     .filter(|line| !line.starts_with("//"))
                     .filter(|line| line.contains("Locator."))
-                    .all(|line| line.contains("Platform") || line.contains("Children"))
+                    .all(|line| matches.iter().any(|&m| line.contains(m)))
             },
             vec![DirType::Pages],
         )

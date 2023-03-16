@@ -10,21 +10,21 @@ fn main() {
     dotenv().ok();
 
     let config = Config::build(env::args()).unwrap_or_else(|err| {
-        eprintln!("Problem with arguments: {err}");
+        eprintln!("apptester_lint: problem with arguments: {err}");
         process::exit(1);
     });
 
     let project_root = get_project_root(config.get_current_dir()).unwrap_or_else(|err| {
-        eprintln!("Problem getting project root: {err}");
+        eprintln!("apptester_lint: problem getting project root: {err}");
         process::exit(1);
     });
     let project = Project::init(&project_root, config.get_feature()).unwrap_or_else(|err| {
-        eprintln!("Problem initialising: {err}");
+        eprintln!("apptester_lint: problem initialising: {err}");
         process::exit(1);
     });
 
     if let Err(err) = run(project) {
-        eprintln!("Application error: {err}");
+        eprintln!("apptester_lint: application error: {err}");
         process::exit(1);
     }
 }
