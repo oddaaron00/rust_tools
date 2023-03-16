@@ -378,7 +378,7 @@ pub mod rules {
             "Use platform Locator methods",
             |file: &File| {
                 let buffered_reader = BufReader::new(file);
-                let mut matches = [
+                let matches = [
                     "Platform",
                     "Children",
                     "ClassName",
