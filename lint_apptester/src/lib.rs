@@ -61,10 +61,16 @@ impl Config {
 
         let current_dir = env::current_dir()?.to_str().unwrap().to_string();
 
-        let feature = match args.next() {
+        let dotenv_path = match args.next() {
             Some(arg) => arg,
-            None => return Err("didn't get a feature to test".into()),
+            None => return Err("didn't get a .env file path".into()),
         };
+        match dotenv::from_path(dotenv_path) {
+            Ok(_) => dotenv::dotenv().ok(),
+            Err(_) => return Err("could not find .env file".into()),
+        };
+
+        let feature = dotenv::var("FEATURE_TO_TEST")?;
 
         let current_dir = match args.next() {
             Some(arg) => arg,
