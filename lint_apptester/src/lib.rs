@@ -425,7 +425,7 @@ pub mod rules {
         #[bench]
         fn bench_all_rules(b: &mut Bencher) {
             let config =
-                Config::build(["".to_owned(), "Files".to_owned(), get_path()].into_iter()).unwrap();
+                Config::build(["".to_owned(), ".env".to_owned(), get_path()].into_iter()).unwrap();
             let project_root = get_project_root(&config.current_dir).unwrap();
             let project = Project::init(&project_root, "Files").unwrap();
             let rules = get_rules();
@@ -440,7 +440,7 @@ pub mod rules {
         #[bench]
         fn bench_rule_log_instead_of_sout(b: &mut Bencher) {
             let config =
-                Config::build(["".to_owned(), "Files".to_owned(), get_path()].into_iter()).unwrap();
+                Config::build(["".to_owned(), ".env".to_owned(), get_path()].into_iter()).unwrap();
             let project_root = get_project_root(&config.current_dir).unwrap();
             let project = Project::init(&project_root, "Files").unwrap();
             let mut rules = Rules::init();
@@ -456,7 +456,7 @@ pub mod rules {
         #[bench]
         fn bench_rule_no_assert_calls(b: &mut Bencher) {
             let config =
-                Config::build(["".to_owned(), "Files".to_owned(), get_path()].into_iter()).unwrap();
+                Config::build(["".to_owned(), ".env".to_owned(), get_path()].into_iter()).unwrap();
             let project_root = get_project_root(&config.current_dir).unwrap();
             let project = Project::init(&project_root, "Files").unwrap();
             let mut rules = Rules::init();
@@ -472,7 +472,7 @@ pub mod rules {
         #[bench]
         fn bench_rule_no_locator_calls(b: &mut Bencher) {
             let config =
-                Config::build(["".to_owned(), "Files".to_owned(), get_path()].into_iter()).unwrap();
+                Config::build(["".to_owned(), ".env".to_owned(), get_path()].into_iter()).unwrap();
             let project_root = get_project_root(&config.current_dir).unwrap();
             let project = Project::init(&project_root, "Files").unwrap();
             let mut rules = Rules::init();
@@ -488,7 +488,7 @@ pub mod rules {
         #[bench]
         fn bench_rule_platform_locator_methods(b: &mut Bencher) {
             let config =
-                Config::build(["".to_owned(), "Files".to_owned(), get_path()].into_iter()).unwrap();
+                Config::build(["".to_owned(), ".env".to_owned(), get_path()].into_iter()).unwrap();
             let project_root = get_project_root(&config.current_dir).unwrap();
             let project = Project::init(&project_root, "Files").unwrap();
             let mut rules = Rules::init();
